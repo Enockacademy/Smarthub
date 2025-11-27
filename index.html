@@ -9,119 +9,39 @@
 <meta name="theme-color" content="#13294B">
 
 <style>
-/* ----------------- GLOBAL ----------------- */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #0A1931;
-    color: white;
-    font-size: 16px;
-}
+body { margin:0; font-family:Arial,sans-serif; background-color:#0A1931; color:white; font-size:16px; }
+h2 { font-size:1.6rem; margin:12px 0; text-align:center; }
+h3 { font-size:1.3rem; margin:8px 0 20px; text-align:center; }
 
-h2 { font-size: 1.6rem; margin: 12px 0; text-align: center; }
-h3 { font-size: 1.3rem; margin: 8px 0 20px; text-align: center; }
+.center-box { width:95%; max-width:500px; margin:30px auto; background-color:white; color:#0A1931; padding:25px; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.25); }
 
-.center-box {
-    width: 95%;
-    max-width: 500px;
-    margin: 30px auto;
-    background-color: white;
-    color: #0A1931;
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
+input, button { width:100%; padding:14px; margin-top:12px; border-radius:10px; border:1px solid #0A1931; font-size:16px; box-sizing:border-box; }
+button { background-color:#0A1931; color:white; cursor:pointer; border:none; transition:0.2s; }
+button:hover { background-color:#13294B; }
 
-input, button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 12px;
-    border-radius: 10px;
-    border: 1px solid #0A1931;
-    font-size: 16px;
-    box-sizing: border-box;
-}
+.page { display:none; }
+.visible { display:block; }
 
-button {
-    background-color: #0A1931;
-    color: white;
-    cursor: pointer;
-    border: none;
-    transition: 0.2s;
-}
-button:hover { background-color: #13294B; }
+.term-btn, .subject-btn, .doc-btn { background-color:white; color:#0A1931; padding:16px; margin:10px 0; border-radius:10px; font-weight:bold; display:flex; flex-direction:column; align-items:flex-start; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); transition:0.2s; }
+.term-btn:hover, .subject-btn:hover, .doc-btn:hover { background-color:#f0f0f0; }
 
-.page { display: none; }
-.visible { display: block; }
+.top-header { background-color:#13294B; padding:18px 10px; text-align:center; font-size:1.2rem; font-weight:bold; position:relative; color:white; }
 
-.term-btn, .subject-btn, .doc-btn {
-    background-color: white;
-    color: #0A1931;
-    padding: 16px;
-    margin: 10px 0;
-    border-radius: 10px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    transition: 0.2s;
-}
-.term-btn:hover, .subject-btn:hover, .doc-btn:hover { background-color: #f0f0f0; }
+.logout-btn { position:absolute; right:12px; top:12px; background-color:#ff4d4d; color:white; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
 
-.top-header {
-    background-color: #13294B;
-    padding: 18px 10px;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    position: relative;
-    color: white;
-}
+button[onclick^="go"] { margin-top:20px; }
 
-.logout-btn {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    background-color: #ff4d4d;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-}
+.whatsapp-btn { position:fixed; bottom:20px; right:20px; background-color:#25D366; width:60px; height:60px; border-radius:50%; display:flex; justify-content:center; align-items:center; text-decoration:none; box-shadow:0 2px 6px rgba(0,0,0,0.3); z-index:1000; transition:0.2s; }
+.whatsapp-btn:hover { transform:scale(1.1); }
+.whatsapp-btn img { width:35px; height:35px; }
 
-button[onclick^="go"] { margin-top: 20px; }
+iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
 
-.whatsapp-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25D366;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    z-index: 1000;
-    transition: 0.2s;
-}
-.whatsapp-btn:hover { transform: scale(1.1); }
-.whatsapp-btn img { width: 35px; height: 35px; }
-
-iframe { width: 100%; max-height: 300px; border-radius: 10px; margin-top: 10px; }
-
-/* Responsive for very small screens */
-@media (max-width: 360px) {
-    .center-box { padding: 20px; }
-    h2 { font-size: 1.4rem; }
-    h3 { font-size: 1.1rem; }
-    input, button { padding: 12px; font-size: 15px; }
+@media (max-width:360px) {
+    .center-box { padding:20px; }
+    h2 { font-size:1.4rem; }
+    h3 { font-size:1.1rem; }
+    input, button { padding:12px; font-size:15px; }
 }
 </style>
 </head>
@@ -243,41 +163,104 @@ document.getElementById("goLogin").onclick = () => show("loginPage");
 document.getElementById("goSignup").onclick = () => show("signupPage");
 
 // ---------------- TERMS → SUBJECTS ----------------
+let selectedTermGlobal = "";
 function openSubjects(term) {
+    selectedTermGlobal = term;
     document.getElementById("selectedTerm").innerText = term;
     show("subjectsPage");
 }
 
 // ---------------- SUBJECTS → DOCUMENTS ----------------
+const docs = {
+    "Term 1": {
+        "PH110": [
+            {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}
+        ],
+        "CH110": [{name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}
+        ],
+        "BI110": [{name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}],
+        "MA110": [{name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}],
+        "LA111": [{name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}],
+        "CS110": [{name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+        {name:"Physics Notes PDF", link:"https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
+         {name:"Physics Video", link:"https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}]
+    },
+    "Term 2": {
+        "PH110": [
+            {name:"Physics Term2 Notes", link:"https://drive.google.com/uc?export=download&id=FILE_ID2", type:"doc"}
+        ],
+        "CH110": [],
+        "BI110": [],
+        "MA110": [],
+        "LA111": [],
+        "CS110": []
+    },
+    "Term 3": {
+        "PH110": [],
+        "CH110": [],
+        "BI110": [],
+        "MA110": [],
+        "LA111": [],
+        "CS110": []
+    }
+};
+
 function openDocs(subject) {
     document.getElementById("selectedSubject").innerText = subject;
-
-    let docs = {
-        "PH110": [
-            {name: "Physics Notes PDF", link: "https://drive.google.com/uc?export=download&id=FILE_ID1", type:"doc"},
-            {name: "Physics Video", link: "https://drive.google.com/file/d/1s-JBM2hGlP2bhizgFkpw9bp7tr1HwIix/preview", type:"video"}
-        ],
-        "CH110": [
-            {name: "Chemistry Notes PDF", link: "https://drive.google.com/uc?export=download&id=FILE_ID3", type:"doc"}
-        ],
-        "BI110": [], "MA110": [], "LA111": [], "CS110": []
-    };
 
     let container = document.getElementById("docsList");
     container.innerHTML = "";
 
-    docs[subject].forEach(item => {
+    let items = docs[selectedTermGlobal][subject] || [];
+    items.forEach(item => {
         let el = document.createElement("div");
         el.className = "doc-btn";
 
         if(item.type === "doc") {
             el.innerHTML = `<span>${item.name}</span><span style="cursor:pointer"> ⬇ Download</span>`;
-            el.querySelector("span:last-child").onclick = (e) => { e.stopPropagation(); window.open(item.link, "_blank"); };
+            el.querySelector("span:last-child").onclick = e => { e.stopPropagation(); window.open(item.link, "_blank"); };
         } else if(item.type === "video") {
-            el.innerHTML = `
-                <span>${item.name}</span>
-                <iframe src="${item.link}" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            `;
+            el.innerHTML = `<span>${item.name}</span><iframe src="${item.link}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
         }
 
         container.appendChild(el);
