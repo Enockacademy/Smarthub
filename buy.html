@@ -1,284 +1,336 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>University Marketplace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #0a3cff;
-      --primary-dark: #062bb5;
-      --accent: #25D366;
-      --danger: #ff4d4d;
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text-main: #222;
-      --text-muted: #777;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Marketplace</title>
 
-    * { box-sizing: border-box; }
-    body, html { margin:0; padding:0; font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text-main); }
-    a { text-decoration: none; }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    /* Landing */
-    #landing { height:100vh; background: url('images/university_bg.jpg') center/cover no-repeat; position: relative; }
-    #landing::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, rgba(10,60,255,0.75), rgba(0,0,0,0.7)); }
-    .landing-content { position: relative; z-index:2; height:100%; display:flex; flex-direction: column; justify-content: center; align-items: center; text-align:center; color:#fff; padding:20px; }
-    .landing-content h1 { font-size:52px; font-weight:700; margin-bottom:15px; }
-    .landing-content p { max-width:700px; font-size:18px; opacity:0.95; margin-bottom:35px; }
-    .cta-btn { background: var(--accent); color:#fff; padding:16px 38px; border-radius:50px; font-size:18px; font-weight:600; transition: transform 0.25s, box-shadow 0.25s; }
-    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.25); }
+<style>
+:root {
+  --primary:#0a3cff;
+  --primary-dark:#062bb5;
+  --accent:#25D366;
+  --danger:#ff4d4d;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text-main:#222;
+  --text-muted:#777;
+}
 
-    /* Dashboard */
-    #dashboard { display: none; padding:60px 20px; max-width:1200px; margin:auto; }
-    .section-title { text-align:center; font-size:32px; font-weight:600; margin-bottom:40px; color: var(--primary); }
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:var(--bg);color:var(--text-main)}
+h1,h2,h3,p{margin:0;padding:0}
 
-    /* Categories grid */
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      justify-items: center;
-    }
-    .category-card {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      border-radius: 14px;
-      padding: 20px 15px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: transform 0.25s, box-shadow 0.25s;
-      width: 100%;
-      max-width: 220px;
-    }
-    .category-card:hover { transform: translateY(-6px); box-shadow: 0 18px 35px rgba(0,0,0,0.25); }
+/* Sticky Header */
+.sticky-header{display:none;position:sticky;top:0;background:#fff;display:flex;justify-content:center;align-items:center;padding:6px 0;z-index:1000;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.sticky-header img{height:40px;width:auto}
 
-    /* Category Pages */
-    .category-section { display: none; padding:50px 20px; max-width:1200px; margin:auto; }
-    .top-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; flex-wrap:wrap; gap:10px; }
-    .back-btn { color: var(--primary); font-weight:500; cursor:pointer; }
-    .search-box input { padding:10px 14px; border-radius:30px; border:1px solid #ddd; outline:none; width:260px; font-family: inherit; }
+/* Landing */
+#landing{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a3cff;color:#fff;text-align:center;position:relative}
+.landing-logo img{height:60px;width:auto;margin-bottom:20px}
+.cta-btn{background:var(--accent);padding:14px 32px;border-radius:40px;color:#fff;font-weight:600;cursor:pointer;transition:0.25s}
+.cta-btn:hover{opacity:.9}
 
-    /* Items grid */
-    .items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
+/* Categories */
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
+.category-card{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:20px;border-radius:14px;text-align:center;cursor:pointer;transition:0.25s}
+.category-card:hover{transform:translateY(-4px);box-shadow:0 10px 20px rgba(0,0,0,0.2)}
 
-    /* Smaller Item card */
-    .item-card {
-      background: var(--card);
-      border-radius:12px;
-      padding: 10px;
-      box-shadow:0 6px 16px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
-      height: 100%;
-    }
-    .item-card:hover { transform: translateY(-6px); box-shadow:0 14px 30px rgba(0,0,0,0.15); }
+/* Category sections */
+.category-section{display:none;padding:20px}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px}
+.back-btn{cursor:pointer;color:var(--primary);font-weight:500}
+.search-box input{padding:8px 14px;border-radius:20px;border:1px solid #ccc;width:220px}
 
-    .item-card img {
-      width: 100%;
-      height: 90px; /* reduced height */
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 6px;
-    }
+/* Items grid */
+.items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 
-    .item-card h3 { font-size:13px; margin:3px 0; }
-    .price { font-size:14px; margin-bottom:3px; color: var(--primary); font-weight:700; }
-    .desc { font-size:12px; line-height:1.3; color: var(--text-muted); flex-grow:1; }
-    .badge { font-size:11px; padding:2px 6px; margin:4px 0; align-self:flex-start; background: var(--danger); color:#fff; border-radius:20px; }
-    .order-btn { margin-top:6px; padding:6px; font-size:12px; border-radius:18px; background: var(--accent); color:#fff; text-align:center; font-weight:600; transition: opacity 0.2s; }
-    .order-btn:hover { opacity:0.85; }
-    .seller { font-size:10px; margin-top:4px; color: var(--text-muted); }
+/* Item card */
+.item-card{background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 16px rgba(0,0,0,.08);display:flex;flex-direction:column}
 
-    /* Responsive */
-    @media(max-width: 1024px) {
-      .categories { grid-template-columns: repeat(2, 1fr); }
-      .items { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media(max-width: 480px) {
-      .categories { grid-template-columns: repeat(2, 1fr); }
-      .items { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+/* Slider */
+.slider{position:relative;width:100%;height:90px;overflow:hidden;border-radius:10px;margin-bottom:6px}
+.slide{position:absolute;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;cursor:pointer}
+.slide.active{opacity:1}
+
+/* Arrows */
+.arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;z-index:5}
+.arrow.left{left:6px}
+.arrow.right{right:6px}
+
+/* Text */
+.item-card h3{font-size:13px;margin:4px 0}
+.price{font-weight:700;color:var(--primary);font-size:14px}
+.desc{font-size:12px;color:var(--text-muted);flex-grow:1}
+.order-btn{margin-top:6px;background:var(--accent);color:#fff;text-align:center;padding:6px;border-radius:18px;font-size:12px;cursor:pointer;display:inline-block;text-decoration:none;transition:0.2s}
+.order-btn:hover{opacity:.85}
+.seller{font-size:10px;color:var(--text-muted);margin-top:4px}
+
+/* Preview modal */
+.preview{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:9999}
+.preview img{max-width:90%;max-height:90%;border-radius:12px}
+.preview span{position:absolute;top:20px;right:25px;color:#fff;font-size:32px;cursor:pointer}
+
+/* Responsive */
+@media(max-width:480px){.categories,.items{grid-template-columns:repeat(2,1fr)}.search-box input{width:100%}}
+</style>
 </head>
 <body>
-  <!-- Landing -->
-  <section id="landing">
-    <div class="landing-content">
-      <h1>University Marketplace</h1>
-      <p>Test your pro marketplace performance with sample items across all categories.</p>
-      <a class="cta-btn" onclick="showDashboard()">Start Browsing</a>
-    </div>
-  </section>
 
-  <!-- Dashboard -->
-  <section id="dashboard">
-    <h2 class="section-title">Browse by Category</h2>
-    <div class="categories">
-      <div class="category-card" onclick="showCategory('fashion')">👕 Fashion</div>
-      <div class="category-card" onclick="showCategory('food')">🍔 Food & Groceries</div>
-      <div class="category-card" onclick="showCategory('academic')">📚 Academic Materials</div>
-      <div class="category-card" onclick="showCategory('electronics')">💻 Electronics</div>
-    </div>
-  </section>
+<!-- Sticky Header -->
+<header class="sticky-header">
+  <img src="images/logo.png" alt="Marketplace Logo">
+</header>
 
-  <!-- Category Pages -->
-  <section id="fashion" class="category-section">
-    <div class="top-bar"><span class="back-btn" onclick="showDashboard()">← Back</span></div>
-    <h2 class="section-title">Fashion</h2>
-    <div class="items">
-      <div class="item-card">
-        <img src="jerseys.jpg" alt="Jerseys">
-        <h3>Jerseys</h3>
-        <div class="price">K150</div>
-        <p class="desc">New season jerses( Second class)</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Buy</a>
-        <div class="seller">Smart hub Store</div>
+<!-- Landing -->
+<section id="landing">
+  <div class="landing-logo">
+    <img src="images/logo.png" alt="Marketplace Logo">
+  </div>
+  <h1>University Marketplace</h1>
+  <div class="cta-btn" onclick="showDashboard()">Start Browsing</div>
+</section>
+
+<!-- Dashboard -->
+<section id="dashboard" style="display:none;padding:20px">
+  <h2 class="section-title">Browse by Category</h2>
+  <div class="categories">
+    <div class="category-card" onclick="showCategory('fashion')">👕 Fashion</div>
+    <div class="category-card" onclick="showCategory('food')">🍔 Food</div>
+    <div class="category-card" onclick="showCategory('academic')">📚 Academic</div>
+    <div class="category-card" onclick="showCategory('electronics')">💻 Electronics</div>
+  </div>
+</section>
+
+<!-- CATEGORY: Fashion -->
+<section id="fashion" class="category-section">
+  <div class="top-bar">
+    <span class="back-btn" onclick="showDashboard()">← Back</span>
+    <div class="search-box">
+      <input type="text" placeholder="Search..." onkeyup="searchItems(this,'fashionItems')">
+    </div>
+  </div>
+  <h2 class="section-title">Fashion</h2>
+  <div class="items" id="fashionItems">
+    <div class="item-card" data-name="Safety Boots" data-price="K900" data-seller="Smart Hub">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/boot1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/boot2.jpg" class="slide" onclick="openPreview(this)">
+        <img src="images/boot3.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
       </div>
-      <div class="item-card">
-        <img src="boot.jpg" alt="University T-shirt">
-        <h3>Safety Boots</h3>
-        <div class="price">K900</div>
-        <p class="desc">Good Quality For Enginneers.</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Smart hub Store</div>
+      <h3>Safety Boots</h3>
+      <div class="price">K900</div>
+      <p class="desc">Strong boots for engineering students</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Smart Hub</div>
+    </div>
+    <div class="item-card" data-name="T-Shirt" data-price="K150" data-seller="Stylish Hub">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/tshirt1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/tshirt2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>T-Shirt</h3>
+      <div class="price">K150</div>
+      <p class="desc">Good Quality T-shirts</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Stylish Hub</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY: Food -->
+<section id="food" class="category-section">
+  <div class="top-bar">
+    <span class="back-btn" onclick="showDashboard()">← Back</span>
+    <div class="search-box">
+      <input type="text" placeholder="Search..." onkeyup="searchItems(this,'foodItems')">
+    </div>
+  </div>
+  <h2 class="section-title">Food & Groceries</h2>
+  <div class="items" id="foodItems">
+    <div class="item-card" data-name="Club Sandwich" data-price="K30" data-seller="Campus Café">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/sandwich1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/sandwich2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>Club Sandwich</h3>
+      <div class="price">K30</div>
+      <p class="desc">Fresh sandwich with vegetables and cheese.</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Campus Café</div>
+    </div>
+    <div class="item-card" data-name="Pizza Slice" data-price="K40" data-seller="Campus Café">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/pizza1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/pizza2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>Pizza Slice</h3>
+      <div class="price">K40</div>
+      <p class="desc">Cheesy slice with toppings.</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Campus Café</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY: Academic -->
+<section id="academic" class="category-section">
+  <div class="top-bar">
+    <span class="back-btn" onclick="showDashboard()">← Back</span>
+    <div class="search-box">
+      <input type="text" placeholder="Search..." onkeyup="searchItems(this,'academicItems')">
+    </div>
+  </div>
+  <h2 class="section-title">Academic Materials</h2>
+  <div class="items" id="academicItems">
+    <div class="item-card" data-name="Binary Operations Notes" data-price="Free" data-seller="Prof Alick">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/binary1.png" class="slide active" onclick="openPreview(this)">
+        <img src="images/binary2.png" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>Binary Operations Notes</h3>
+      <div class="price">Free</div>
+      <p class="desc">Step-by-step demo of Binary Operations.</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Get</a>
+      <div class="seller">Prof Alick</div>
+    </div>
+    <div class="item-card" data-name="Physics Notes" data-price="K120" data-seller="Physics Dept">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/physics1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/physics2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>Physics Notes</h3>
+      <div class="price">K120</div>
+      <p class="desc">Covers mechanics and thermodynamics.</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Physics Dept</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY: Electronics -->
+<section id="electronics" class="category-section">
+  <div class="top-bar">
+    <span class="back-btn" onclick="showDashboard()">← Back</span>
+    <div class="search-box">
+      <input type="text" placeholder="Search..." onkeyup="searchItems(this,'electronicsItems')">
+    </div>
+  </div>
+  <h2 class="section-title">Electronics</h2>
+  <div class="items" id="electronicsItems">
+    <div class="item-card" data-name="8GB USB Drive" data-price="K120" data-seller="Smart Hub">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/usb1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/usb2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>8GB USB Drive</h3>
+      <div class="price">K120</div>
+      <p class="desc">Metal USB flash drive</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Smart Hub</div>
+    </div>
+    <div class="item-card" data-name="Dell Laptop" data-price="K3200" data-seller="Smart Hub">
+      <div class="slider">
+        <span class="arrow left">‹</span>
+        <img src="images/laptop1.jpg" class="slide active" onclick="openPreview(this)">
+        <img src="images/laptop2.jpg" class="slide" onclick="openPreview(this)">
+        <span class="arrow right">›</span>
+      </div>
+      <h3>Dell Laptop</h3>
+      <div class="price">K3200</div>
+      <p class="desc">Pre-owned laptop in good condition</p>
+      <a class="order-btn" href="#" onclick="sendWhatsApp(this)">Buy</a>
+      <div class="seller">Smart Hub</div>
+    </div>
+  </div>
+</section>
+
+<!-- Preview modal -->
+<div id="preview" class="preview" onclick="closePreview()">
+  <span>&times;</span>
+  <img src="">
 </div>
-      <div class="item-card">
-        <img src="t2.jpg" alt="University T-shirt">
-        <h3>T-SHIRT</h3>
-        <div class="price">K0.00</div>
-        <p class="desc">Good Quality T-shirts</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order</a>
-        <div class="seller">Stylish hub Store</div>
-</div>
-<div class="item-card">
-        <img src="t5.jpg" alt="University T-shirt">
-        <h3>T-shirt</h3>
-        <div class="price">K00.00</div>
-        <p class="desc">Good Quality</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Stylish hub</div>
-</div>
-<div class="item-card">
-        <img src="2alo.jpg" alt="University T-shirt">
-        <h3>Safety</h3>
-        <div class="price">K00.00</div>
-        <p class="desc">Good Quality</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order</a>
-        <div class="seller">Stylish hub</div>
-</div>
-<div class="item-card">
-        <img src="db.jpg" alt="University T-shirt">
-        <h3>Safety Boots</h3>
-        <div class="price">K00.00</div>
-        <p class="desc">Good quality</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">chart</a>
-        <div class="seller">Stylish Hub</div>
-      </div>
-    </div>
-  </section>
 
-  <section id="food" class="category-section">
-    <div class="top-bar"><span class="back-btn" onclick="showDashboard()">← Back to Dashboard</span></div>
-    <h2 class="section-title">Food & Groceries</h2>
-    <div class="items">
-      <div class="item-card">
-        <img src="images/sandwich.jpg" alt="Sandwich">
-        <h3>Club Sandwich</h3>
-        <div class="price">K30</div>
-        <p class="desc">Fresh sandwich with vegetables and cheese.</p>
-        <a class="order-btn" href="https://wa.me/26097XXXXXXX" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Campus Café</div>
-      </div>
-      <div class="item-card">
-        <img src="images/pizza_slice.jpg" alt="Pizza Slice">
-        <h3>Pizza Slice</h3>
-        <div class="price">K40</div>
-        <p class="desc">Cheesy slice with toppings.</p>
-        <a class="order-btn" href="https://wa.me/26097XXXXXXX" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Campus Café</div>
-      </div>
-    </div>
-  </section>
+<script>
+/* Show dashboard / categories */
+function showDashboard(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  hideAll();
+  document.querySelector('.sticky-header').style.display='flex';
+}
+function showCategory(id){
+  document.getElementById('dashboard').style.display='none';
+  hideAll();
+  document.getElementById(id).style.display='block';
+  document.querySelector('.sticky-header').style.display='flex';
+}
+function hideAll(){
+  document.querySelectorAll('.category-section').forEach(s=>s.style.display='none');
+}
 
-  <section id="academic" class="category-section">
-    <div class="top-bar"><span class="back-btn" onclick="showDashboard()">← Back to Dashboard</span></div>
-    <h2 class="section-title">Academic Materials</h2>
-    <div class="items">
-      <div class="item-card">
-        <img src="alick.png" alt="Math Notes">
-        <h3>BINARY OPERATIONS</h3>
-        <div class="price">Free</div>
-        <p class="desc">Demo- Binary Operations ( Step by step Solving)</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Get</a>
-        <div class="seller">Prof Alick</div>
-      </div>
-      <div class="item-card">
-        <img src="images/physics_notes.jpg" alt="Physics Notes">
-        <h3>Physics Notes</h3>
-        <div class="price">K120</div>
-        <p class="desc">Sample notes covering mechanics and thermodynamics.</p>
-        <a class="order-btn" href="https://wa.me/26097XXXXXXX" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Physics Dept</div>
-      </div>
-    </div>
-  </section>
+/* Slider arrows */
+document.querySelectorAll('.slider').forEach(slider=>{
+  let slides = slider.querySelectorAll('.slide');
+  let index = 0;
+  slider.querySelector('.right').onclick = ()=>{
+    slides[index].classList.remove('active');
+    index = (index+1)%slides.length;
+    slides[index].classList.add('active');
+  };
+  slider.querySelector('.left').onclick = ()=>{
+    slides[index].classList.remove('active');
+    index = (index-1+slides.length)%slides.length;
+    slides[index].classList.add('active');
+  };
+});
 
-  <section id="electronics" class="category-section">
-    <div class="top-bar"><span class="back-btn" onclick="showDashboard()">← Back to Dashboard</span></div>
-    <h2 class="section-title">Electronics</h2>
-    <div class="items">
-      <div class="item-card">
-        <img src="flash.jpg" alt="USB Flash Drive">
-        <h3>8GB USB Drive</h3>
-        <div class="price">K120</div>
-        <p class="desc">Metal USB flash</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Chart</a>
-        <div class="seller">Smart HUB- Enoc</div>
-      </div>
-      <div class="item-card">
-        <img src="pc32.jpg" alt="Headphones">
-        <h3>Dell laptop</h3>
-        <div class="price">K3,200.00</div>
-        <p class="desc">pre owned</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Smart hub</div>
-      </div>
-<div class="item-card">
-        <img src="pc32.jpg" alt="Headphones">
-        <h3>Dell laptop</h3>
-        <div class="price">K3,200.00</div>
-        <p class="desc">pre owned</p>
-        <a class="order-btn" href="https://wa.me/260768037965" target="_blank">Order via WhatsApp</a>
-        <div class="seller">Smart hub</div>
-    </div>
-  </section>
+/* Preview modal */
+function openPreview(img){
+  document.getElementById('preview').style.display='flex';
+  document.querySelector('#preview img').src = img.src;
+}
+function closePreview(){
+  document.getElementById('preview').style.display='none';
+}
 
-  <script>
-    function showDashboard() {
-      document.getElementById('landing').style.display='none';
-      document.getElementById('dashboard').style.display='block';
-      hideAllCategories();
-    }
+/* Search bar */
+function searchItems(input,id){
+  let filter = input.value.toLowerCase();
+  document.querySelectorAll('#'+id+' .item-card').forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(filter)?'':'none';
+  });
+}
 
-    function showCategory(id) {
-      document.getElementById('dashboard').style.display='none';
-      hideAllCategories();
-      document.getElementById(id).style.display='block';
-    }
+/* WhatsApp pre-filled message */
+function sendWhatsApp(button){
+  const card = button.closest('.item-card');
+  const name = card.getAttribute('data-name');
+  const price = card.getAttribute('data-price');
+  const seller = card.getAttribute('data-seller');
+  
+  const phone = '260768037965';
+  const message = `Hello, I want to buy "${name}" for ${price} from ${seller}.`;
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  window.open(url,'_blank');
+}
+</script>
 
-    function hideAllCategories() {
-      document.querySelectorAll('.category-section').forEach(el => el.style.display='none');
-    }
-  </script>
 </body>
 </html>
