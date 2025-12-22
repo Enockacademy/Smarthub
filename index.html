@@ -58,15 +58,10 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
 #adPopup .price { font-size:1.5rem; font-weight:bold; margin-bottom:5px; }
 #adPopup .old-price { text-decoration: line-through; color: #ff6666; margin-right:10px; }
 #adPopup .whatsapp-buy { background-color:#25D366; color:white; padding:12px 20px; border-radius:10px; font-size:1.2rem; text-decoration:none; display:inline-block; margin-top:15px; }
+#adPopup #countdown { display:block; margin-top:10px; font-size:1rem; }
 
-@keyframes fadeIn {
-    from {opacity:0;}
-    to {opacity:1;}
-}
-@keyframes fadeOut {
-    from {opacity:1;}
-    to {opacity:0;}
-}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+@keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 
 @media (max-width:360px) {
     .center-box { padding:20px; }
@@ -120,9 +115,9 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
         <div class="logout-btn" onclick="logout()">Logout</div>
     </div>
     <h2>Select Term</h2>
-    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 1'))">Term 1</div>
-    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 2'))">Term 2</div>
-    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 3'))">Term 3</div>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 1'), 'Term Selection')">Term 1</div>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 2'), 'Term Selection')">Term 2</div>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 3'), 'Term Selection')">Term 3</div>
 </div>
 
 <!-- SUBJECTS PAGE -->
@@ -131,12 +126,12 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
         SMART HUB — <span id="selectedTerm"></span>
     </div>
     <h2>Select Subject</h2>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚙️PH110'))">⚙️Physics (PH110)</div>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚗️CH110'))">⚗️Chemistry (CH110)</div>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🧬BI110'))">🧬Biology (BI110)</div>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🔣MA110'))">🔣Math (MA110)</div>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('📠LA111'))">📠Communication Skills (LA111)</div>
-    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🖥️CS110'))">🖥️Computer Science (CS110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚙️PH110'), '⚙️PH110')">⚙️Physics (PH110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚗️CH110'), '⚗️CH110')">⚗️Chemistry (CH110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🧬BI110'), '🧬BI110')">🧬Biology (BI110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🔣MA110'), '🔣MA110')">🔣Math (MA110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('📠LA111'), '📠LA111')">📠Communication Skills (LA111)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🖥️CS110'), '🖥️CS110')">🖥️Computer Science (CS110)</div>
     <button onclick="goDashboard()">Back</button>
 </div>
 
@@ -147,19 +142,20 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
     </div>
     <h2>Resources</h2>
     <div id="docsList" style="padding:0 10px;"></div>
-    <button onclick="showAdBefore(() => goSubjects())">Back</button>
+    <button onclick="showAdBefore(() => goSubjects(), 'Term Selection')">Back</button>
 </div>
 
 <!-- FULL SCREEN AD POPUP -->
 <div id="adPopup">
-    <audio id="adAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay></audio>
-    <img id="adImage" src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=600&q=80" alt="Fashion">
-    <h2 id="adTitle">Stylish Jacket</h2>
-    <p id="adDesc">Comfortable winter jacket perfect for all seasons.</p>
+    <audio id="adAudio"></audio>
+    <img id="adImage" src="" alt="Ad Image">
+    <h2 id="adTitle"></h2>
+    <p id="adDesc"></p>
     <div class="price">
-        <span class="old-price">$120</span>
-        <span class="current-price">$80</span>
+        <span class="old-price"></span>
+        <span class="current-price"></span>
     </div>
+    <span id="countdown"></span>
     <a id="adWhatsapp" class="whatsapp-buy" target="_blank">Buy on WhatsApp</a>
 </div>
 
@@ -177,8 +173,8 @@ function show(page) {
 // ---------------- FIREBASE ----------------
 const firebaseConfig = {
     apiKey: "AIzaSyC6gaEIKoeZmSRwVVJOrkQtk7SW_iiqz04",
-    authDomain: "secondary-school-center.firebaseapp.com",
-    projectId: "secondary-school-center"
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -221,8 +217,8 @@ function openSubjects(term) {
     show("subjectsPage");
 }
 
-// const docsc = {
-    const docsc = {
+// ---------------- DOCUMENTS ----------------
+const docsc = {
     "Term 1": {
         "⚙️PH110": [{name:"🟣SERWAY- Physics Text Book",link:"https://drive.google.com/file/d/1GTIjf-58ri_o9kOmZyvysxvRqumU1x74/view", type:"doc"},
             {name:"⚫CHAPTER 1-UNITS AND MEASUREMENTS", link:"https://drive.google.com/file/d/1XF4TW5UFIdvMQTatBDI2xU0n8z2fxqQs/view", type:"doc"},
@@ -334,90 +330,112 @@ function openSubjects(term) {
         "🖥️CS110": []
     }
 };
-
-// ---------------- OPEN DOCUMENTS ----------------
 function openDocs(subject) {
     document.getElementById("selectedSubject").innerText = subject;
-
     const docsList = document.getElementById("docsList");
     docsList.innerHTML = "";
-
-    const subjectDocs = docsc[selectedTermGlobal][subject];
-
+    const subjectDocs = docsc[selectedTermGlobal][subject] || [];
     subjectDocs.forEach(doc => {
         const btn = document.createElement("div");
         btn.className = "doc-btn";
         btn.innerText = doc.name;
-
         btn.onclick = () => window.open(doc.link, "_blank");
-
         docsList.appendChild(btn);
     });
-
     show("docsPage");
 }
 
 // ---------------- NAVIGATION ----------------
-function goSubjects() {
-    show("subjectsPage");
-}
+function goSubjects() { show("subjectsPage"); }
+function goDashboard() { show("dashboardPage"); }
+function logout() { firebase.auth().signOut().then(() => { show("loginPage"); }); }
 
-function goDashboard() {
-    show("dashboardPage");
-}
-
-function logout() {
-    firebase.auth().signOut().then(() => {
-        show("loginPage");
-    });
-}
 // ---------------- AD FUNCTION ----------------
-function showAdBefore(callback) {
+function showAdBefore(callback, subject) {
     const adPopup = document.getElementById("adPopup");
     const adAudio = document.getElementById("adAudio");
     const whatsappBtn = document.getElementById("adWhatsapp");
+    const countdownEl = document.getElementById("countdown");
+    const adImage = document.getElementById("adImage");
 
-    // Random product example
-    const products = [
-        {
-            title: "Stylish Jacket",
-            desc: "Comfortable winter jacket perfect for all seasons.",
-            oldPrice: "$120",
-            currentPrice: "$80",
-            image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=600&q=80",
-            whatsappMsg: "Hello, I want to buy the Stylish Jacket"
+    const ads = {
+        "Term Selection": {
+            title: "Second class",
+            desc: "Check out our premium jerseys!-free delivery",
+            oldPrice: "K150",
+            currentPrice: "K120",
+            images: ["120.jpg","121.jpg","122.jpg"],
+            audio: "aud120.mp3",
+            whatsappMsg: "Hello, I want to buy Smart Hub second class jerseys at K120"
         },
-        {
-            title: "Casual Sneakers",
-            desc: "Trendy sneakers for everyday wear.",
-            oldPrice: "$90",
-            currentPrice: "$60",
-            image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
-            whatsappMsg: "Hello, I want to buy the Casual Sneakers"
+        "⚙️PH110": {
+            title: "Suit",
+            desc: "Good quality",
+            oldPrice: "K300.00",
+            currentPrice: "K250.00",
+            images: ["dbw.jpg","2alo.jpg"],
+            audio: "aud2alo.mp3",
+            whatsappMsg: "Hello, I want to buy the suit black and white at K250"
+        },
+        "⚗️CH110": {
+            title: "Jerseys",
+            desc: "Third class- Free delivery",
+            oldPrice: "K120.00",
+            currentPrice: "100.00",
+            images: ["100.jpg","101.jpg","102.jpg"],
+            audio: "audio/chemistry-ad.mp3",
+            whatsappMsg: "Hello, I want to buy the third class jerseys at K100.00"
+        },
+        "default": {
+            title: "Safety boots",
+            desc: "Check out our latest Safety boots!",
+            oldPrice: "K900.00",
+            currentPrice: "K855.00",
+            images: ["booti.jpg","boot"],
+            audio: "audboot.mp3",
+            whatsappMsg: "Hello, I want to buy these boots at K860.00"
         }
-    ];
+    };
 
-    const product = products[Math.floor(Math.random()*products.length)];
+    const ad = ads[subject] || ads["default"];
 
-    document.getElementById("adTitle").innerText = product.title;
-    document.getElementById("adDesc").innerText = product.desc;
-    document.querySelector("#adPopup .old-price").innerText = product.oldPrice;
-    document.querySelector("#adPopup .current-price").innerText = product.currentPrice;
-    document.getElementById("adImage").src = product.image;
-    whatsappBtn.href = "https://wa.me/260768037965?text=" + encodeURIComponent(product.whatsappMsg);
+    document.getElementById("adTitle").innerText = ad.title;
+    document.getElementById("adDesc").innerText = ad.desc;
+    document.querySelector("#adPopup .old-price").innerText = ad.oldPrice;
+    document.querySelector("#adPopup .current-price").innerText = ad.currentPrice;
+    whatsappBtn.href = "https://wa.me/260768037965?text=" + encodeURIComponent(ad.whatsappMsg);
 
-    adPopup.style.display = "flex";
+    adAudio.src = ad.audio;
     adAudio.currentTime = 0;
     adAudio.play();
 
+    let imgIndex = 0;
+    adImage.src = ad.images[imgIndex];
+    const imageInterval = setInterval(() => {
+        imgIndex = (imgIndex + 1) % ad.images.length;
+        adImage.src = ad.images[imgIndex];
+    }, 3000);
+
+    adPopup.style.display = "flex";
+
+    let timeLeft = 10;
+    countdownEl.innerText = `Ad closes in ${timeLeft}s`;
+    const countdownInterval = setInterval(() => {
+        timeLeft--;
+        countdownEl.innerText = `Ad closes in ${timeLeft}s`;
+        if (timeLeft <= 0) clearInterval(countdownInterval);
+    }, 1000);
+
     setTimeout(() => {
+        clearInterval(imageInterval);
+        adAudio.pause();
         adPopup.style.animation = "fadeOut 1s";
         adPopup.addEventListener("animationend", () => {
             adPopup.style.display = "none";
             adPopup.style.animation = "fadeIn 1s";
             callback();
         }, { once: true });
-    }, 10000); // 10 seconds
+    }, 10000);
 }
 </script>
 </body>
