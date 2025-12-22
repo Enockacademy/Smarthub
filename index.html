@@ -37,6 +37,37 @@ button[onclick^="go"] { margin-top:20px; }
 
 iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
 
+/* FULL SCREEN AD */
+#adPopup {
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    background-color:rgba(0,0,0,0.95);
+    color:white;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+    padding:20px;
+    text-align:center;
+    animation: fadeIn 1s;
+}
+#adPopup img { max-width:80%; margin-bottom:20px; border-radius:12px; }
+#adPopup h2 { font-size:2rem; margin-bottom:10px; }
+#adPopup p { font-size:1.2rem; margin-bottom:10px; }
+#adPopup .price { font-size:1.5rem; font-weight:bold; margin-bottom:5px; }
+#adPopup .old-price { text-decoration: line-through; color: #ff6666; margin-right:10px; }
+#adPopup .whatsapp-buy { background-color:#25D366; color:white; padding:12px 20px; border-radius:10px; font-size:1.2rem; text-decoration:none; display:inline-block; margin-top:15px; }
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+@keyframes fadeOut {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+
 @media (max-width:360px) {
     .center-box { padding:20px; }
     h2 { font-size:1.4rem; }
@@ -56,7 +87,7 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
     <input type="password" id="signupPassword" placeholder="Password">
     <button id="signupBtn">Sign Up</button>
     <p>Already have an account? <a id="goLogin">Login</a></p>
-<a href="buy.html" style="text-decoration:none;">
+    <a href="buy.html" style="text-decoration:none;">
         <button style="
             margin:20px auto;
             width:90%;
@@ -89,22 +120,9 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
         <div class="logout-btn" onclick="logout()">Logout</div>
     </div>
     <h2>Select Term</h2>
-    <div class="term-btn" onclick="openSubjects('Term 1')">Term 1</div>
-    <div class="term-btn" onclick="openSubjects('Term 2')">Term 2</div>
-    <div class="term-btn" onclick="openSubjects('Term 3')">Term 3</div>
-<a href="buy.html" style="text-decoration:none;">
-        <button style="
-            margin:20px auto;
-            width:90%;
-            max-width:300px;
-            background-color:#16a34a;
-            color:white;
-            font-size:16px;
-            border-radius:10px;
-        ">
-            🛒 Buy And Sell
-        </button>
-    </a>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 1'))">Term 1</div>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 2'))">Term 2</div>
+    <div class="term-btn" onclick="showAdBefore(() => openSubjects('Term 3'))">Term 3</div>
 </div>
 
 <!-- SUBJECTS PAGE -->
@@ -113,12 +131,12 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
         SMART HUB — <span id="selectedTerm"></span>
     </div>
     <h2>Select Subject</h2>
-    <div class="subject-btn" onclick="openDocs('⚙️PH110')">⚙️Physics (PH110)</div>
-    <div class="subject-btn" onclick="openDocs('⚗️CH110')">⚗️Chemistry (CH110)</div>
-    <div class="subject-btn" onclick="openDocs('🧬BI110')">🧬Biology (BI110)</div>
-    <div class="subject-btn" onclick="openDocs('🔣MA110')">🔣Math (MA110)</div>
-    <div class="subject-btn" onclick="openDocs('📠LA111')">📠Communication Skills (LA111)</div>
-    <div class="subject-btn" onclick="openDocs('🖥️CS110')">🖥️Computer Science (CS110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚙️PH110'))">⚙️Physics (PH110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('⚗️CH110'))">⚗️Chemistry (CH110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🧬BI110'))">🧬Biology (BI110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🔣MA110'))">🔣Math (MA110)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('📠LA111'))">📠Communication Skills (LA111)</div>
+    <div class="subject-btn" onclick="showAdBefore(() => openDocs('🖥️CS110'))">🖥️Computer Science (CS110)</div>
     <button onclick="goDashboard()">Back</button>
 </div>
 
@@ -129,13 +147,21 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
     </div>
     <h2>Resources</h2>
     <div id="docsList" style="padding:0 10px;"></div>
-    <button onclick="goSubjects()">Back</button>
+    <button onclick="showAdBefore(() => goSubjects())">Back</button>
 </div>
 
-<!-- WHATSAPP BUTTON -->
-<a id="whatsappBtn" href="https://chat.whatsapp.com/EgdupHCDfQ26XoqPQOmzP2?mode=hqrc" target="_blank" class="whatsapp-btn">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</a>
+<!-- FULL SCREEN AD POPUP -->
+<div id="adPopup">
+    <audio id="adAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay></audio>
+    <img id="adImage" src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=600&q=80" alt="Fashion">
+    <h2 id="adTitle">Stylish Jacket</h2>
+    <p id="adDesc">Comfortable winter jacket perfect for all seasons.</p>
+    <div class="price">
+        <span class="old-price">$120</span>
+        <span class="current-price">$80</span>
+    </div>
+    <a id="adWhatsapp" class="whatsapp-buy" target="_blank">Buy on WhatsApp</a>
+</div>
 
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -146,7 +172,6 @@ iframe { width:100%; max-height:300px; border-radius:10px; margin-top:10px; }
 function show(page) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("visible"));
     document.getElementById(page).classList.add("visible");
-    document.getElementById("whatsappBtn").style.display = (page === "signupPage" || page === "dashboardPage") ? "flex" : "none";
 }
 
 // ---------------- FIREBASE ----------------
@@ -196,8 +221,8 @@ function openSubjects(term) {
     show("subjectsPage");
 }
 
-// ---------------- SUBJECTS → DOCUMENTS ----------------
-const docs = {
+// const docsc = {
+    const docsc = {
     "Term 1": {
         "⚙️PH110": [{name:"🟣SERWAY- Physics Text Book",link:"https://drive.google.com/file/d/1GTIjf-58ri_o9kOmZyvysxvRqumU1x74/view", type:"doc"},
             {name:"⚫CHAPTER 1-UNITS AND MEASUREMENTS", link:"https://drive.google.com/file/d/1XF4TW5UFIdvMQTatBDI2xU0n8z2fxqQs/view", type:"doc"},
@@ -310,42 +335,90 @@ const docs = {
     }
 };
 
+// ---------------- OPEN DOCUMENTS ----------------
 function openDocs(subject) {
     document.getElementById("selectedSubject").innerText = subject;
 
-    let container = document.getElementById("docsList");
-    container.innerHTML = "";
+    const docsList = document.getElementById("docsList");
+    docsList.innerHTML = "";
 
-    let items = docs[selectedTermGlobal][subject] || [];
-    items.forEach(item => {
-        let el = document.createElement("div");
-        el.className = "doc-btn";
+    const subjectDocs = docsc[selectedTermGlobal][subject];
 
-        if(item.type === "doc") {
-            el.innerHTML = `<span>${item.name}</span><span style="cursor:pointer"> ⬇ Download</span>`;
-            el.querySelector("span:last-child").onclick = e => { e.stopPropagation(); window.open(item.link, "_blank"); };
-        } else if(item.type === "video") {
-            el.innerHTML = `<span>${item.name}</span><iframe src="${item.link}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-        }
+    subjectDocs.forEach(doc => {
+        const btn = document.createElement("div");
+        btn.className = "doc-btn";
+        btn.innerText = doc.name;
 
-        container.appendChild(el);
+        btn.onclick = () => window.open(doc.link, "_blank");
+
+        docsList.appendChild(btn);
     });
 
     show("docsPage");
 }
 
-// ---------------- BACK BUTTONS ----------------
-function goDashboard() { show("dashboardPage"); }
-function goSubjects() { show("subjectsPage"); }
+// ---------------- NAVIGATION ----------------
+function goSubjects() {
+    show("subjectsPage");
+}
 
-// ---------------- LOGOUT ----------------
-function logout() { auth.signOut().then(() => show("loginPage")); }
+function goDashboard() {
+    show("dashboardPage");
+}
 
-// Initial page
-show("signupPage");
+function logout() {
+    firebase.auth().signOut().then(() => {
+        show("loginPage");
+    });
+}
+// ---------------- AD FUNCTION ----------------
+function showAdBefore(callback) {
+    const adPopup = document.getElementById("adPopup");
+    const adAudio = document.getElementById("adAudio");
+    const whatsappBtn = document.getElementById("adWhatsapp");
 
-// ---------------- SERVICE WORKER (for future PWA) ----------------
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(()=>console.log('SW Registered'));
+    // Random product example
+    const products = [
+        {
+            title: "Stylish Jacket",
+            desc: "Comfortable winter jacket perfect for all seasons.",
+            oldPrice: "$120",
+            currentPrice: "$80",
+            image: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=600&q=80",
+            whatsappMsg: "Hello, I want to buy the Stylish Jacket"
+        },
+        {
+            title: "Casual Sneakers",
+            desc: "Trendy sneakers for everyday wear.",
+            oldPrice: "$90",
+            currentPrice: "$60",
+            image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
+            whatsappMsg: "Hello, I want to buy the Casual Sneakers"
+        }
+    ];
+
+    const product = products[Math.floor(Math.random()*products.length)];
+
+    document.getElementById("adTitle").innerText = product.title;
+    document.getElementById("adDesc").innerText = product.desc;
+    document.querySelector("#adPopup .old-price").innerText = product.oldPrice;
+    document.querySelector("#adPopup .current-price").innerText = product.currentPrice;
+    document.getElementById("adImage").src = product.image;
+    whatsappBtn.href = "https://wa.me/260768037965?text=" + encodeURIComponent(product.whatsappMsg);
+
+    adPopup.style.display = "flex";
+    adAudio.currentTime = 0;
+    adAudio.play();
+
+    setTimeout(() => {
+        adPopup.style.animation = "fadeOut 1s";
+        adPopup.addEventListener("animationend", () => {
+            adPopup.style.display = "none";
+            adPopup.style.animation = "fadeIn 1s";
+            callback();
+        }, { once: true });
+    }, 10000); // 10 seconds
+}
 </script>
 </body>
 </html>
